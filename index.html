@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASP.NET GYORSTALPALÓ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 40px;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #444;
+        }
+        code {
+            background-color: #e8e8e8;
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+        }
+        pre {
+            background: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        section {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>ASP.NET Core Web API - Gyorstalpaló</h1>
+    
+    <section>
+        <h2>📌 Visual Studio 2022 Beállítások</h2>
+        <ul>
+            <li><strong>Projekt sablon:</strong> <code>ASP.NET Core Web API</code></li>
+            <li><input type="checkbox" checked> Helyezd el a megoldást és a projektet ugyanabban a könyvtárban</li>
+            <li><strong>Framework:</strong> <code>.NET 8.0</code></li>
+            <li><input type="checkbox" checked> Konfiguráld HTTPS-re</li>
+            <li><input type="checkbox" checked> Engedélyezd az Open API (Swagger) támogatást</li>
+            <li><input type="checkbox" checked> Használj vezérlőket (MVC...)</li>
+        </ul>
+    </section>
+    
+    <section>
+        <h2>🗄️ SQL Server Objektum Explorer</h2>
+        <p><strong>Új lekérdezés hozzáadása:</strong></p>
+        <pre>&lt;magic&gt;make the database&lt;/magic&gt;</pre>
+    </section>
+    
+    <section>
+        <h2>📦 Csomagok telepítése (Package Manager Console)</h2>
+        <pre>
+Install-Package Microsoft.EntityFrameworkCore.SqlServer
+Install-Package Microsoft.EntityFrameworkCore.Design
+Install-Package Microsoft.EntityFrameworkCore.Tools
+        </pre>
+        <p><strong>Adatbázis váz generálása:</strong></p>
+        <pre>
+Scaffold-DbContext "_MyConnectionString_" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context _MyDbContext_ -DataAnnotations
+        </pre>
+    </section>
+    
+    <section>
+        <h2>⚙️ appsettings.json konfiguráció</h2>
+        <pre>
+"ConnectionStrings": {
+    "DefaultConnection": "_MyConnectionString_"
+}
+        </pre>
+    </section>
+    
+    <section>
+        <h2>📝 Program.cs beállításai</h2>
+        <p><strong>Adatbáziskapcsolat hozzáadása:</strong></p>
+        <pre>
+var connectionString = builder.Configuration
+    .GetConnectionString("DefaultConnection");
+builder.Services
+    .AddDbContext<_MyDbContext_>
+    (opt => opt.UseSqlServer(connectionString));
+        </pre>
+    </section>
+    
+    <section>
+        <h2>🎛️ Vezérlő létrehozása</h2>
+        <ul>
+            <li><strong>Model osztály:</strong> <code>_MyModel_</code></li>
+            <li><strong>DbContext osztály:</strong> <code>_MyDbContext_</code></li>
+            <li><strong>Vezérlő neve:</strong> <code>_MyModel_s</code> (alapértelmezett)</li>
+        </ul>
+    </section>
+    
+    <section>
+        <h2>🔓 CORS engedélyezése (Program.cs)</h2>
+        <pre>
+builder.Services.AddCors(
+    options => options.AddDefaultPolicy(
+        builder => builder
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod()));
+
+// Ezt az app.UseHttpsRedirection(); előtt kell hozzáadni!
+app.UseCors();
+        </pre>
+    </section>
+</body>
+</html>
